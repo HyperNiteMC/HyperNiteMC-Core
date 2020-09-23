@@ -332,7 +332,7 @@
                         <notimestamp>true</notimestamp>
                         <bottom><![CDATA[<b>© HyperNiteMC - 2020</b>]]></bottom>
                         <reportOutputDirectory>${project.build.directory}</reportOutputDirectory>
-                        <destDir>../public</destDir>
+                        <destDir>../docs</destDir>
                         <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
                     </configuration>
                 </plugin>
