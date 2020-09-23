@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package com.hypernite.mc.hnmc.core.builders;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import com.hypernite.mc.hnmc.core.main.HyperNiteMC;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import com.hypernite.mc.hnmc.core.managers.builder.AbstractAdvMessageBuilder;</a>
+<span class="sourceLineNo">005</span><a id="line.5">import com.hypernite.mc.hnmc.core.managers.builder.AbstractMessageBuilder;</a>
+<span class="sourceLineNo">006</span><a id="line.6">import net.md_5.bungee.api.chat.BaseComponent;</a>
+<span class="sourceLineNo">007</span><a id="line.7">import net.md_5.bungee.api.chat.TextComponent;</a>
+<span class="sourceLineNo">008</span><a id="line.8">import org.bukkit.entity.Player;</a>
+<span class="sourceLineNo">009</span><a id="line.9"></a>
+<span class="sourceLineNo">010</span><a id="line.10">/**</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * @see MessageBuilder</a>
+<span class="sourceLineNo">012</span><a id="line.12"> */</a>
+<span class="sourceLineNo">013</span><a id="line.13">public class AdvMessageBuilder implements AbstractAdvMessageBuilder {</a>
+<span class="sourceLineNo">014</span><a id="line.14"></a>
+<span class="sourceLineNo">015</span><a id="line.15">    private final AbstractAdvMessageBuilder delegate;</a>
+<span class="sourceLineNo">016</span><a id="line.16"></a>
+<span class="sourceLineNo">017</span><a id="line.17">    public AdvMessageBuilder(String... msg) {</a>
+<span class="sourceLineNo">018</span><a id="line.18">        this.delegate = HyperNiteMC.getAPI().getFactory().getBuilder().getAdvMessageBuilder(msg);</a>
+<span class="sourceLineNo">019</span><a id="line.19">    }</a>
+<span class="sourceLineNo">020</span><a id="line.20"></a>
+<span class="sourceLineNo">021</span><a id="line.21">    @Override</a>
+<span class="sourceLineNo">022</span><a id="line.22">    public AbstractAdvMessageBuilder add(String... msg) {</a>
+<span class="sourceLineNo">023</span><a id="line.23">        return delegate.add(msg);</a>
+<span class="sourceLineNo">024</span><a id="line.24">    }</a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26">    @Override</a>
+<span class="sourceLineNo">027</span><a id="line.27">    public AbstractAdvMessageBuilder add(BaseComponent... baseComponent) {</a>
+<span class="sourceLineNo">028</span><a id="line.28">        return delegate.add(baseComponent);</a>
+<span class="sourceLineNo">029</span><a id="line.29">    }</a>
+<span class="sourceLineNo">030</span><a id="line.30"></a>
+<span class="sourceLineNo">031</span><a id="line.31">    @Override</a>
+<span class="sourceLineNo">032</span><a id="line.32">    public AbstractAdvMessageBuilder add(AbstractMessageBuilder... builders) {</a>
+<span class="sourceLineNo">033</span><a id="line.33">        return delegate.add(builders);</a>
+<span class="sourceLineNo">034</span><a id="line.34">    }</a>
+<span class="sourceLineNo">035</span><a id="line.35"></a>
+<span class="sourceLineNo">036</span><a id="line.36">    @Override</a>
+<span class="sourceLineNo">037</span><a id="line.37">    public AbstractAdvMessageBuilder nextLine() {</a>
+<span class="sourceLineNo">038</span><a id="line.38">        return delegate.nextLine();</a>
+<span class="sourceLineNo">039</span><a id="line.39">    }</a>
+<span class="sourceLineNo">040</span><a id="line.40"></a>
+<span class="sourceLineNo">041</span><a id="line.41">    @Override</a>
+<span class="sourceLineNo">042</span><a id="line.42">    public void sendPlayer(Player player) {</a>
+<span class="sourceLineNo">043</span><a id="line.43">        delegate.sendPlayer(player);</a>
+<span class="sourceLineNo">044</span><a id="line.44">    }</a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46">    @Override</a>
+<span class="sourceLineNo">047</span><a id="line.47">    public TextComponent build() {</a>
+<span class="sourceLineNo">048</span><a id="line.48">        return delegate.build();</a>
+<span class="sourceLineNo">049</span><a id="line.49">    }</a>
+<span class="sourceLineNo">050</span><a id="line.50">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

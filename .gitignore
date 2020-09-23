@@ -1,5 +1,5 @@
 /.idea/
 */out/
 */target/
-/docs/
-HyperNiteMC-Core.iml
+**/dependency-reduced-pom.xml
+**/HyperNiteMC-Core.iml
