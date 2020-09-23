@@ -1,13 +1,12 @@
-image: alpine:latest
+image: ruby:2.7
 
 pages:
   tags:
     - docs
-  stage: deploy
   script:
-    - echo 'Making javadocs...'
+    - gem install bundler
+    - bundle install
+    - bundle exec jekyll build -d public
   artifacts:
     paths:
       - public
-  only:
-    - master
