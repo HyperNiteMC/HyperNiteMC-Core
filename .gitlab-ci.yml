@@ -8,6 +8,6 @@ pages:
     - echo 'Making javadocs...'
   artifacts:
     paths:
-      - docs
+      - public
   only:
     - master
