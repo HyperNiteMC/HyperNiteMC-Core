@@ -1,0 +1,29 @@
+help:
+  - "&e================"
+  - "&7輸入/help media 查看伺服器媒體"
+  - "&7輸入/help staff 查看管理員指令"
+  - "&7輸入/help commands 查看伺服器指令"
+  - "&e==============="
+media:
+  - "&9Facebook &7- &ffacebook.com/caxcraftblank"
+  - "&cYoutube &7- &fyoutube.com/caxcraftblank"
+staff:
+  - "&e==============="
+  - "&7輸入/help admin"
+  - "&7輸入/help mod"
+  - "&7輸入/help helper"
+  - "&e================"
+helper:
+  - "&e==============="
+  - "helper page"
+  - "&e==============="
+mod:
+  - "&e==============="
+  - "mod page"
+  - "&e==============="
+admin:
+  - "&e==============="
+  - "admin page"
+  - "&e==============="
+command:
+  - "&e查看伺服器指令請到 &fmc.hypernite.com/command"

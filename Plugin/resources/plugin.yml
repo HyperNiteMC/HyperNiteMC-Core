@@ -1,0 +1,19 @@
+main: com.hypernite.mc.hnmc.core.main.HyperNiteMC
+version: ${project.version}
+name: HyperNiteMC-Core
+api-version: "1.15"
+description: Libraries use
+depend: [ ProtocolLib, Vault ]
+softdepend: [ PlaceholderAPI, AsyncCreateWorld ]
+authors: [ EricLam, Caxerx ]
+commands:
+  hypernitemc:
+    aliases: [ hypernite,hnmc ]
+    description: show the version
+  help:
+    aliases: [ '?', pl ]
+    description: show help command
+permissions:
+  hypernite.admin:
+    description: hypernite admin permission
+    default: false

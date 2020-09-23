@@ -1,0 +1,99 @@
+cancelEventsEnabled: true
+# <blocks>
+# <worlds>
+# <entities>
+cancelEvents:
+
+  #Block Event
+  LeavesDecayEvent:
+    useAsWhitelist: true
+    worlds: [ ]
+  BlockSpreadEvent:
+    useAsWhitelist: true
+    worlds: [ ]
+    blocks:
+      whitelist: true
+  BlockBurnEvent:
+    useAsWhitelist: true
+    worlds: [ ]
+    blocks:
+      whitelist: true
+  BlockBreakEvent:
+    useAsWhitelist: true
+    worlds: [ ]
+    blocks:
+      whitelist: true
+  BlockPlaceEvent:
+    useAsWhitelist: true
+    worlds: [ ]
+    blocks:
+      whitelist: true
+
+  #Player Event
+  PlayerSwapHandItemsEvent:
+    useAsWhitelist: true
+    worlds: [ ]
+  FoodLevelChangeEvent:
+    useAsWhitelist: false
+    worlds:
+      - void
+  PlayerInteractEvent:
+    useAsWhitelist: true
+    worlds: [ ]
+    blocks:
+      whitelist: false
+      list:
+        - CHEST
+        - ENDER_CHEST
+        - DISPENSER
+        - ANVIL
+        - BLAST_FURNACE
+        - CRAFTING_TABLE
+  PlayerInteractEntityEvent:
+    useAsWhitelist: true
+    worlds: [ ]
+    entities:
+      whitelist: false
+      list:
+        - ITEM_FRAME
+  #Entity Event
+  EntityExplodeEvent:
+    useAsWhitelist: true
+    worlds: [ ]
+    entites:
+      whitelist: true
+  EntityCombustEvent:
+    useAsWhitelist: false
+    worlds:
+      - void
+    entites:
+      whitelist: true
+  EntityBlockFormEvent:
+    useAsWhitelist: true
+    worlds: [ ]
+    entites:
+      whitelist: true
+  EntityDamageByEntityEvent:
+    useAsWhitelist: true
+    worlds: [ ]
+    entities:
+      whitelist: false
+      list:
+        - ITEM_FRAME
+  #Other Event
+  WeatherChangeEvent:
+    useAsWhitelist: false
+    worlds:
+      - void
+  HangingBreakByEntityEvent:
+    useAsWhitelist: true
+    worlds: [ ]
+    entities:
+      whitelist: true
+  CraftItemEvent:
+    useAsWhitelist: false
+    worlds:
+      - void
+    items:
+      whitelist: true
+      list: [ ]

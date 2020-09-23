@@ -1,0 +1,5 @@
+useOwnScoreboard: false
+fallBackDelay: 7
+interactEventDefaultCancelled: true
+clickEventDefaultCancelled: true
+autoLoadExtraWorlds: false
