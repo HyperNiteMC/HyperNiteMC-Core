@@ -1,6 +1,8 @@
 image: alpine:latest
 
 pages:
+  tags:
+    - docs
   stage: deploy
   script:
     - echo 'Making javadocs...'
