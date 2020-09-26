@@ -82,4 +82,9 @@ public class HyperNiteMC implements HyperNiteMCAPI {
     public EventCancelManager getEventCancelManager() {
         throw new RuntimeException("RUNTIME ERROR");
     }
+
+    @Override
+    public ResourceManager getResourceManager(ResourceManager.Type type) {
+        throw new RuntimeException("RUNTIME ERROR");
+    }
 }

@@ -2,7 +2,7 @@ package com.hypernite.mc.hnmc.core.misc.commands;
 
 import com.hypernite.mc.hnmc.core.main.HyperNiteMC;
 import com.hypernite.mc.hnmc.core.managers.CoreConfig;
-import com.hypernite.mc.hnmc.core.misc.commands.exception.NotExecutableException;
+import com.hypernite.mc.hnmc.core.exception.NotExecutableException;
 import com.hypernite.mc.hnmc.core.misc.commands.functional.AdvCmdExecution;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class AdvCommandNodeBuilder<Sender extends CommandSender> {
 
-    private String command;
+    private final String command;
     private String permission;
     private String description;
     private String placeholder;

@@ -1,4 +1,4 @@
-package com.hypernite.mc.hnmc.core.misc.commands.exception;
+package com.hypernite.mc.hnmc.core.exception;
 
 /**
  * @see com.hypernite.mc.hnmc.core.misc.commands.CommandNode

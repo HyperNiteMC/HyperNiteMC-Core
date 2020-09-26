@@ -15,11 +15,13 @@ public class HNMCoreConfig implements CoreConfig {
     @Inject
     public HNMCoreConfig(Plugin plugin, CoreFactory factory) { //real constructor
         this.manager = factory.getConfigFactory(plugin)
-                .register("Database.yml", DatabaseConfig.class)
-                .register("Config.yml", MainConfig.class)
-                .register("CancelEvent.yml", CancelEventConfig.class)
-                .register("Messages.yml", MessageConfig.class)
-                .register("Help.yml", HelpConfig.class).dump();
+                .register(DatabaseConfig.class)
+                .register(MainConfig.class)
+                .register(CancelEventConfig.class)
+                .register(MessageConfig.class)
+                .register(HelpConfig.class)
+                .register(VersionCheckerConfig.class)
+                .dump();
         papiEnabled = plugin.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
     }
 
@@ -37,6 +39,10 @@ public class HNMCoreConfig implements CoreConfig {
 
     public CancelEventConfig getCancel() {
         return manager.getConfigAs(CancelEventConfig.class);
+    }
+
+    public VersionCheckerConfig getVersionChecker() {
+        return manager.getConfigAs(VersionCheckerConfig.class);
     }
 
     public boolean isPapiEnabled() {

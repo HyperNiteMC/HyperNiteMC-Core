@@ -1,8 +1,8 @@
 package com.hypernite.mc.hnmc.core.misc.commands;
 
 
-import com.hypernite.mc.hnmc.core.misc.commands.exception.CommandArgumentException;
-import com.hypernite.mc.hnmc.core.misc.commands.exception.CommandPermissionException;
+import com.hypernite.mc.hnmc.core.exception.CommandArgumentException;
+import com.hypernite.mc.hnmc.core.exception.CommandPermissionException;
 import com.hypernite.mc.hnmc.core.misc.permission.Perm;
 import org.bukkit.command.CommandSender;
 

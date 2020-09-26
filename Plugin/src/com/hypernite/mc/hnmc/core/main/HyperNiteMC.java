@@ -14,14 +14,13 @@ import com.hypernite.mc.hnmc.core.command.HelpCommand;
 import com.hypernite.mc.hnmc.core.config.implement.HNMCoreConfig;
 import com.hypernite.mc.hnmc.core.ericlam.ChatRunnerHandler;
 import com.hypernite.mc.hnmc.core.factory.CoreFactory;
-import com.hypernite.mc.hnmc.core.listener.EventListener;
-import com.hypernite.mc.hnmc.core.listener.SecurityListener;
-import com.hypernite.mc.hnmc.core.listener.SecurityRunnable;
-import com.hypernite.mc.hnmc.core.listener.WorldListeners;
+import com.hypernite.mc.hnmc.core.listener.*;
 import com.hypernite.mc.hnmc.core.listener.cancelevent.OptionalListener;
 import com.hypernite.mc.hnmc.core.managers.*;
 import com.hypernite.mc.hnmc.core.misc.world.WorldLoadedException;
 import com.hypernite.mc.hnmc.core.misc.world.WorldNonExistException;
+import com.hypernite.mc.hnmc.core.updater.HyperNiteResourceManager;
+import com.hypernite.mc.hnmc.core.updater.SpigotResourceManager;
 import com.hypernite.mc.hnmc.core.worlds.BukkitWorldHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -60,6 +59,8 @@ public class HyperNiteMC extends JavaPlugin implements HyperNiteMCAPI {
     private CoreFactory coreFactory;
     private RedisDataSource redisDataSource;
     private Injector injector;
+    private SpigotResourceManager spigotResourceManager;
+    private HyperNiteResourceManager hyperniteResourceManager;
 
     public static HNMCoreConfig getHnmCoreConfig() {
         return hnmCoreConfig;
@@ -98,6 +99,7 @@ public class HyperNiteMC extends JavaPlugin implements HyperNiteMCAPI {
         moduleImplmentor.register(Plugin.class, this);
         injector = Guice.createInjector(moduleImplmentor);
         api = this;
+
         plugin = injector.getInstance(Plugin.class);
         coreConfig = injector.getInstance(CoreConfig.class);
         bungeeManager = injector.getInstance(BungeeManager.class);
@@ -112,16 +114,22 @@ public class HyperNiteMC extends JavaPlugin implements HyperNiteMCAPI {
         chatRunnerHandler = injector.getInstance(ChatRunnerHandler.class);
         itemEventManager = injector.getInstance(ItemBuilderEventListener.class);
         coreFactory = injector.getInstance(CoreFactory.class);
-        hnmCoreConfig = (HNMCoreConfig) coreConfig;
-        hnmcWorldManager = (BukkitWorldHandler) worldManager;
         helpPagesManager = injector.getInstance(HelpPagesManager.class);
         formatDatabaseManager = injector.getInstance(FormatDatabaseManager.class);
         skinDatabaseManager = injector.getInstance(SkinDatabaseManager.class);
         eventCancelManager = injector.getInstance(EventCancelManager.class);
         vaultAPI = injector.getInstance(VaultAPI.class);
+        spigotResourceManager = injector.getInstance(SpigotResourceManager.class);
+        hyperniteResourceManager = injector.getInstance(HyperNiteResourceManager.class);
+
+        hnmCoreConfig = (HNMCoreConfig) coreConfig;
+        hnmcWorldManager = (BukkitWorldHandler) worldManager;
+
         if (hnmCoreConfig.getDatabase().redis.enabled) {
             redisDataSource = injector.getInstance(RedisDataSource.class);
         }
+
+
     }
 
     @Override
@@ -171,6 +179,8 @@ public class HyperNiteMC extends JavaPlugin implements HyperNiteMCAPI {
             formatDatabaseManager.getChatformat(); //Get the chatformat from mysql
             helpPagesManager.getPages(); //Get the help pages from mysql
         });
+
+        this.getServer().getPluginManager().registerEvents(new VersionUpdateListener(this), this);
 
 
         hnmcWorldManager.loadDefaultWorld();
@@ -272,5 +282,10 @@ public class HyperNiteMC extends JavaPlugin implements HyperNiteMCAPI {
     @Override
     public EventCancelManager getEventCancelManager() {
         return eventCancelManager;
+    }
+
+    @Override
+    public ResourceManager getResourceManager(ResourceManager.Type type) {
+        return type == ResourceManager.Type.SPIGOT ? spigotResourceManager : hyperniteResourceManager;
     }
 }

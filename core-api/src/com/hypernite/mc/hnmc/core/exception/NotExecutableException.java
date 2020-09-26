@@ -1,4 +1,4 @@
-package com.hypernite.mc.hnmc.core.misc.commands.exception;
+package com.hypernite.mc.hnmc.core.exception;
 
 import com.hypernite.mc.hnmc.core.misc.commands.functional.CmdExecution;
 
@@ -6,7 +6,7 @@ import com.hypernite.mc.hnmc.core.misc.commands.functional.CmdExecution;
  * @see com.hypernite.mc.hnmc.core.misc.commands.CommandNodeBuilder#execute(CmdExecution)
  */
 public class NotExecutableException extends RuntimeException {
-    private String command;
+    private final String command;
 
     public NotExecutableException(String command) {
         super("執行函式 為 Null");

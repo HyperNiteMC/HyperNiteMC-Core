@@ -12,5 +12,6 @@ public class HNCoreCommand extends DefaultCommand {
         this.addSub(new FormatMainCommand(this));
         this.addSub(new HelpListMainCommand(this));
         this.addSub(new WorldMainCommand(this));
+        this.addSub(new VersionMainCommand(this));
     }
 }

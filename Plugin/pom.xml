@@ -5,11 +5,10 @@
     <parent>
         <groupId>com.hypernite.mc</groupId>
         <artifactId>hypernitemc-core</artifactId>
-        <version>7.6.4</version>
+        <version>7.6.5</version>
     </parent>
 
     <artifactId>Plugin</artifactId>
-    <version>7.6.4.9</version>
 
     <packaging>jar</packaging>
 

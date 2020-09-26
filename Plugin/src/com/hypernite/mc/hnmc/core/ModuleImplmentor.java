@@ -23,15 +23,18 @@ import com.hypernite.mc.hnmc.core.managers.*;
 import com.hypernite.mc.hnmc.core.managers.builder.Builder;
 import com.hypernite.mc.hnmc.core.mysql.SQLDataSourceManager;
 import com.hypernite.mc.hnmc.core.skin.PlayerSkinHandler;
+import com.hypernite.mc.hnmc.core.updater.HyperNiteResourceManager;
+import com.hypernite.mc.hnmc.core.updater.SpigotResourceManager;
 import com.hypernite.mc.hnmc.core.worlds.BukkitWorldHandler;
 import com.hypernite.mc.hnmc.core.worlds.WorldPropertiesManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("unchecked")
 public class ModuleImplmentor implements Module {
 
-    private Map<Class, Object> preImplement = new HashMap<>();
+    private final Map<Class, Object> preImplement = new HashMap<>();
 
     @Override
     public void configure(Binder binder) {
@@ -60,6 +63,8 @@ public class ModuleImplmentor implements Module {
         binder.bind(FormatDatabaseManager.class).in(Scopes.SINGLETON);
         binder.bind(ChatRunnerHandler.class).in(Scopes.SINGLETON);
         binder.bind(ItemBuilderEventListener.class).in(Scopes.SINGLETON);
+        binder.bind(SpigotResourceManager.class).in(Scopes.SINGLETON);
+        binder.bind(HyperNiteResourceManager.class).in(Scopes.SINGLETON);
 
 
         /*
@@ -72,7 +77,7 @@ public class ModuleImplmentor implements Module {
         preImplement.forEach((c, o) -> binder.bind(c).toInstance(o));
     }
 
-    public void register(Class cls, Object obj) {
+    public <T> void register(Class<T> cls, T  obj) {
         preImplement.put(cls, obj);
     }
 }

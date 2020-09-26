@@ -1,6 +1,6 @@
 package com.hypernite.mc.hnmc.core.misc.commands;
 
-import com.hypernite.mc.hnmc.core.misc.commands.exception.NotExecutableException;
+import com.hypernite.mc.hnmc.core.exception.NotExecutableException;
 import com.hypernite.mc.hnmc.core.misc.commands.functional.CmdExecution;
 import org.bukkit.command.CommandSender;
 

@@ -80,4 +80,11 @@ public interface HyperNiteMCAPI {
      */
     EventCancelManager getEventCancelManager();
 
+    /**
+     * 插件版本管理
+     * @return 插件版本管理器
+     * @param type 管理器類別
+     */
+    ResourceManager getResourceManager(ResourceManager.Type type);
+
 }
