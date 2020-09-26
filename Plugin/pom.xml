@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>Plugin</artifactId>
+    <version>${parent.version}.1</version>
 
     <packaging>jar</packaging>
 

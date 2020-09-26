@@ -4,6 +4,7 @@ import com.hypernite.mc.hnmc.core.config.implement.yaml.VersionCheckerConfig;
 import com.hypernite.mc.hnmc.core.exception.ResourceNotFoundException;
 import com.hypernite.mc.hnmc.core.main.HyperNiteMC;
 import com.hypernite.mc.hnmc.core.managers.ResourceManager;
+import com.hypernite.mc.hnmc.core.misc.permission.Perm;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,14 +13,13 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
 public class VersionUpdateListener implements Listener {
 
-    private final Map<String, String> versionMap = new ConcurrentHashMap<>();
+    private final Map<String, String> updateMap = new ConcurrentHashMap<>();
 
     public VersionUpdateListener(HyperNiteMC hyperNiteMC) {
         new CheckerRunnable(hyperNiteMC).runTaskTimer(hyperNiteMC, 10L, HyperNiteMC.getHnmCoreConfig().getVersionChecker().intervalHours * 3600 * 20L);
@@ -27,13 +27,10 @@ public class VersionUpdateListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        Arrays.stream(Bukkit.getServer().getPluginManager().getPlugins()).forEach(s -> {
-            if (versionMap.containsKey(s.getName())) {
-                var latestVersion = versionMap.get(s.getName());
-                if (!versionNewer(s.getDescription().getVersion(), latestVersion)) {
-                    e.getPlayer().sendMessage(HyperNiteMC.getHnmCoreConfig().getPrefix() + "§c 插件更新: " + s.getName() + " v" + s.getDescription().getVersion() + ", 最新版本: v" + latestVersion);
-                }
-            }
+        if (!e.getPlayer().hasPermission(Perm.DEVELOPER)) return;
+        updateMap.forEach((plugin, versions)->{
+            var version = versions.split(":");
+            e.getPlayer().sendMessage(HyperNiteMC.getHnmCoreConfig().getPrefix() + "§c 插件更新: " + plugin + " v" + version[1] + ", 最新版本: v" + version[0]);
         });
     }
 
@@ -53,12 +50,20 @@ public class VersionUpdateListener implements Listener {
             for (Plugin resource : Bukkit.getServer().getPluginManager().getPlugins()) {
                 String plugin = resource.getName();
                 if (config.resourceId_to_checks.containsKey(plugin) && config.enabled_spigot_check) {
-                    api.getResourceManager(ResourceManager.Type.SPIGOT).fetchLatestVersion(plugin, v -> versionMap.put(plugin, v), err -> {
+                    api.getResourceManager(ResourceManager.Type.SPIGOT).fetchLatestVersion(plugin, v -> {
+                        if (versionNewer(resource.getDescription().getVersion(), v)){
+                            updateMap.put(plugin, v+":"+resource.getDescription().getVersion());
+                        }
+                    }, err -> {
                         api.getLogger().warning("獲取插件 " + plugin + " 的最新版本時出現錯誤: " + err.getMessage() + " (插件資源 id 可能輸入有誤。)");
                         if (err instanceof IOException) err.printStackTrace();
                     });
                 } else if (!config.resourceId_to_checks.containsKey(plugin)) {
-                    api.getResourceManager(ResourceManager.Type.HYPERNITE).fetchLatestVersion(plugin, v -> versionMap.put(plugin, v), err -> {
+                    api.getResourceManager(ResourceManager.Type.HYPERNITE).fetchLatestVersion(plugin, v -> {
+                        if (versionNewer(resource.getDescription().getVersion(), v)){
+                            updateMap.put(plugin, v+":"+resource.getDescription().getVersion());
+                        }
+                    }, err -> {
                         if (err instanceof ResourceNotFoundException && config.ignore_unknown) return;
                         api.getLogger().warning("獲取插件 " + plugin + " 的最新版本時出現錯誤: " + err.getMessage());
                         if (err instanceof IOException) err.printStackTrace();
