@@ -51,7 +51,7 @@ public class VersionUpdateListener implements Listener {
                 String plugin = resource.getName();
                 if (config.resourceId_to_checks.containsKey(plugin) && config.enabled_spigot_check) {
                     api.getResourceManager(ResourceManager.Type.SPIGOT).fetchLatestVersion(plugin, v -> {
-                        if (versionNewer(resource.getDescription().getVersion(), v)){
+                        if (!versionNewer(resource.getDescription().getVersion(), v)){
                             updateMap.put(plugin, v+":"+resource.getDescription().getVersion());
                         }
                     }, err -> {
@@ -60,7 +60,7 @@ public class VersionUpdateListener implements Listener {
                     });
                 } else if (!config.resourceId_to_checks.containsKey(plugin)) {
                     api.getResourceManager(ResourceManager.Type.HYPERNITE).fetchLatestVersion(plugin, v -> {
-                        if (versionNewer(resource.getDescription().getVersion(), v)){
+                        if (!versionNewer(resource.getDescription().getVersion(), v)){
                             updateMap.put(plugin, v+":"+resource.getDescription().getVersion());
                         }
                     }, err -> {

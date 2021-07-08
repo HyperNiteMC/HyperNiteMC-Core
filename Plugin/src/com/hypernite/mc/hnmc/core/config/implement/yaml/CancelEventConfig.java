@@ -9,6 +9,7 @@ import java.util.Map;
 @Resource(locate = "CancelEvent.yml")
 public class CancelEventConfig extends Configuration {
     public boolean cancelEventsEnabled;
+    public List<String> eventPackageScans;
     public Map<String, Canceller> cancelEvents;
 
     public static class Canceller {

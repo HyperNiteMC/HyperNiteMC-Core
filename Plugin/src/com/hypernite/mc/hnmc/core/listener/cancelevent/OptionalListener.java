@@ -5,10 +5,6 @@ import com.hypernite.mc.hnmc.core.config.implement.HNMCoreConfig;
 import com.hypernite.mc.hnmc.core.config.implement.yaml.CancelEventConfig;
 import com.hypernite.mc.hnmc.core.main.HyperNiteMC;
 import com.hypernite.mc.hnmc.core.misc.permission.Perm;
-import io.github.classgraph.ClassGraph;
-import io.github.classgraph.ClassInfo;
-import io.github.classgraph.ClassInfoList;
-import io.github.classgraph.ScanResult;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -37,7 +33,10 @@ import org.bukkit.event.vehicle.*;
 import org.bukkit.event.weather.WeatherEvent;
 import org.bukkit.event.world.WorldEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.EventExecutor;
+import org.bukkit.plugin.RegisteredListener;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -46,46 +45,26 @@ import java.util.stream.Collectors;
 public class OptionalListener implements Listener {
 
     private final Set<UUID> exception = new HashSet<>();
+    private final List<String> eventPackageScans;
     private final Map<String, CancelEventConfig.Canceller> section;
     private CancelEventManager cancelEventManager;
 
     public OptionalListener() {
         HNMCoreConfig cm = HyperNiteMC.getHnmCoreConfig();
+        this.eventPackageScans = cm.getCancel().eventPackageScans;
         this.section = cm.getCancel().cancelEvents;
         if (section.isEmpty()) {
             HyperNiteMC.plugin.getLogger().info("Cancel Event is empty, skipped.");
             return;
         }
-        ClassInfoList events;
 
-        try (ScanResult result = new ClassGraph().whitelistPackages(Event.class.getPackageName()).enableClassInfo().scan()) {
-            ClassInfo classInfo = result.getClassInfo(Event.class.getName());
-            events = classInfo.getSubclasses().filter(info -> !info.isAbstract());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
-        Set<String> registeredEvents = section.keySet();
-        try {
-            main:
-            for (ClassInfo event : events) {
-                //noinspection unchecked
-                final Class<? extends Event> eventClass = (Class<? extends Event>) Class.forName(event.getName());
-                if (!registeredEvents.contains(eventClass.getSimpleName())) continue;
-                Class<?> iterateCls = eventClass;
-                while (!containEventHandlers(iterateCls)) {
-                    if (iterateCls == iterateCls.getSuperclass()) {
-                        continue main;
-                    } else {
-                        iterateCls = iterateCls.getSuperclass();
-                    }
-                }
-
-                Bukkit.getPluginManager().registerEvent(eventClass, this, EventPriority.LOWEST, (ig, ev) -> this.onAllEvent(ev), HyperNiteMC.plugin, false);
+        for (String eventName : section.keySet()) {
+            Class<? extends Event> eventClass = getEventClass(eventName);
+            if (eventClass != null){
+                Bukkit.getServer().getPluginManager().registerEvent(eventClass, this, EventPriority.NORMAL, (listener, event) -> this.onAllEvent(event), HyperNiteMC.plugin);
+            }else{
+                HyperNiteMC.plugin.getLogger().warning(eventName+" is not exist, ignored cancel handle.");
             }
-        } catch (ClassNotFoundException e) {
-            HyperNiteMC.plugin.getLogger().warning("Scanned class wasn't found: " + e.getMessage());
         }
 
         cancelEventManager = (CancelEventManager) HyperNiteMC.getAPI().getEventCancelManager();
@@ -169,6 +148,7 @@ public class OptionalListener implements Listener {
         Player player = null;
         World world = null;
         String name = e.getEventName();
+        HyperNiteMC.plugin.getLogger().info(name);
         if (cancelEventManager.canGetWith(e, World.class)) {
             world = cancelEventManager.getEventWith(e, World.class);
         }
@@ -231,6 +211,18 @@ public class OptionalListener implements Listener {
                 cancellable.setCancelled(true);
             }
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Nullable
+    private Class<? extends Event> getEventClass(String eventName){
+        for (String subpackage : eventPackageScans) {
+            try {
+                return (Class<? extends Event>) Class.forName("org.bukkit.event.".concat(subpackage).concat(".").concat(eventName));
+            }catch (ClassNotFoundException ignored){
+            }
+        }
+        return null;
     }
 
 

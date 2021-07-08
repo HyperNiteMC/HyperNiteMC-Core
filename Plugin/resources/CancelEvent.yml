@@ -1,4 +1,16 @@
 cancelEventsEnabled: true
+eventPackageScans:
+  - block
+  - enchantment
+  - entity
+  - hanging
+  - inventory
+  - player
+  - raid
+  - server
+  - vehicle
+  - weather
+  - world
 # <blocks>
 # <worlds>
 # <entities>
