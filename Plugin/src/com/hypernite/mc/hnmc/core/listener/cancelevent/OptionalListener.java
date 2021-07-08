@@ -148,7 +148,6 @@ public class OptionalListener implements Listener {
         Player player = null;
         World world = null;
         String name = e.getEventName();
-        HyperNiteMC.plugin.getLogger().info(name);
         if (cancelEventManager.canGetWith(e, World.class)) {
             world = cancelEventManager.getEventWith(e, World.class);
         }
