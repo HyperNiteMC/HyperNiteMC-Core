@@ -152,10 +152,7 @@ public class HyperNiteMC extends JavaPlugin implements HyperNiteMCAPI {
         Random random = new Random();
         var enableds = Arrays.stream(getServer().getPluginManager().getPlugins()).filter(Plugin::isEnabled).toArray(Plugin[]::new);
         int index = random.nextInt(enableds.length);
-        getServer().getPluginManager().registerEvents(new SecurityListener(this), enableds[index]);
         getServer().getPluginManager().registerEvents(new WorldListeners(), this);
-        index = random.nextInt(enableds.length);
-        new SecurityRunnable().runTaskTimer(enableds[index], 0L, 300 * 20L);
 
         commandRegister.registerCommand(this, new HNCoreCommand());
 

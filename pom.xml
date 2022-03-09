@@ -38,7 +38,7 @@
         <!--PlaceHolderAPI-->
         <repository>
             <id>placeholderapi</id>
-            <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
         <!--Vault-->
         <repository>
@@ -169,7 +169,7 @@
             <dependency>
                 <groupId>me.clip</groupId>
                 <artifactId>placeholderapi</artifactId>
-                <version>2.9.2</version>
+                <version>2.11.2</version>
                 <scope>provided</scope>
             </dependency>
             <!--dependency>
